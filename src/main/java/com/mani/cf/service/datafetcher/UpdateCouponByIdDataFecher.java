@@ -20,24 +20,24 @@ public class UpdateCouponByIdDataFecher implements DataFetcher<Coupon>  {
 
 	public static final String HASH_KEY = "Coupon";
 	
-	@Autowired
-	private RedisTemplate template;
+	//@Autowired
+	//private RedisTemplate template;
 	
 	@Autowired
 	CouponRepository repository;
 	
 	@Override	
 	public Coupon get(DataFetchingEnvironment environment) {
-		Optional<Coupon> op =  repository.findById(environment.getArgument("id"));
-		if(op.isPresent()) {
-			System.out.println(op.get());
-			Coupon dbCoupon = op.get();
-			dbCoupon.setName(environment.getArgument("name"));
-			dbCoupon.setDescription(environment.getArgument("description"));
-			dbCoupon.setValue(environment.getArgument("value"));
-			dbCoupon.setCategory(Category.valueOf(environment.getArgument("category")));
-			Coupon updCoupon = repository.save(dbCoupon);
-			template.opsForHash().put(HASH_KEY, updCoupon.getId(), updCoupon);
+		Coupon coupon =  repository.findCouponById(environment.getArgument("id"));
+		if(coupon != null) {
+		
+		
+			coupon.setName(environment.getArgument("name"));
+			coupon.setDescription(environment.getArgument("description"));
+			coupon.setValue(environment.getArgument("value"));
+			coupon.setCategory(Category.valueOf(environment.getArgument("category")));
+			Coupon updCoupon = repository.save(coupon);
+			//template.opsForHash().put(HASH_KEY, updCoupon.getId(), updCoupon);
 			return updCoupon;
 		}else {
 			return null;

@@ -16,8 +16,6 @@ import graphql.schema.DataFetchingEnvironment;
 
 @Service
 public class GetCouponByIdDataFecher implements DataFetcher<Coupon> {
-	
-	Logger logger = LoggerFactory.getLogger(GetCouponByIdDataFecher.class);
 
 	public static final String HASH_KEY = "Coupon";
 
@@ -25,20 +23,14 @@ public class GetCouponByIdDataFecher implements DataFetcher<Coupon> {
 	@Autowired
 	CouponRepository repository;
 	
-	@Autowired
-	private RedisTemplate template;
+	//@Autowired
+	//private RedisTemplate template;
 	
 	@Override	
 	public Coupon get(DataFetchingEnvironment environment) {
-		Coupon coupon = (Coupon) template.opsForHash().get(HASH_KEY, environment.getArgument("id"));
-		if(coupon != null) {
-			logger.info("Called Cached Coupon");
-			return coupon;
-		}else {
-			logger.info("Called DB Coupon");
-			return repository.findById(environment.getArgument("id")).get();
-		}
-		
+		int id=environment.getArgument("id");
+		return  repository.findCouponById(id); 
+		 
 	}
 
 }

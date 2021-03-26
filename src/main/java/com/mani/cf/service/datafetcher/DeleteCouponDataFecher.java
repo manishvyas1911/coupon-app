@@ -21,20 +21,20 @@ public class DeleteCouponDataFecher implements DataFetcher<Boolean>  {
 	public static final String HASH_KEY = "Coupon";
 
 	
-	@Autowired
-	private RedisTemplate template;
+	//@Autowired
+	//private RedisTemplate template;
 
 	@Autowired
 	CouponRepository repository;
 	
+	//@CacheEvict(key="#id",value="Coupon")
 	@Override
-	@CacheEvict(key="#id",value="Coupon")
 	public Boolean get(DataFetchingEnvironment environment) {
 		// TODO Auto-generated method stub
-		Optional<Coupon> op =  repository.findById(environment.getArgument("id"));
-		if(op.isPresent()) {
-			template.opsForHash().delete(HASH_KEY, op.get().getId());
-			repository.delete(op.get());
+		Coupon op =  repository.findCouponById(environment.getArgument("id"));
+		if(op != null) {
+			// template.opsForHash().delete(HASH_KEY, op.get().getId());
+			repository.deleteCoupon(op.getId());
 			return true;
 		}else {
 			return false;

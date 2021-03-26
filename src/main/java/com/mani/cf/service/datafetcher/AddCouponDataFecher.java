@@ -25,23 +25,19 @@ public class AddCouponDataFecher implements DataFetcher<Coupon>  {
 	@Autowired
 	CouponRepository repository;
 	
-	@Autowired
-	private RedisTemplate template;
-	
 	@Override
 	public Coupon get(DataFetchingEnvironment environment) {
 		// TODO Auto-generated method stub
-		
+		int id = environment.getArgument("id");
 		String name = environment.getArgument("name");
 		String description = environment.getArgument("description");
 		int value = environment.getArgument("value");
 		Category category = Category.valueOf(environment.getArgument("category"));
 		
-		Coupon coupon = new Coupon(name,description, category, value);
-		
+		Coupon coupon = new Coupon(id,name,description, category, value);
+		logger.info("Inside add");
 		logger.info("{}",coupon);
 		Coupon savedCoupon = repository.save(coupon);
-		template.opsForHash().put(HASH_KEY, savedCoupon.getId(), savedCoupon);
 		
 		return savedCoupon;
 	}

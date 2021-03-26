@@ -30,8 +30,8 @@ import graphql.schema.idl.TypeDefinitionRegistry;
 @Service
 public class GraphQLService {
 	
-	@Autowired
-	CouponRepository couponRepository;
+	//@Autowired
+	// CouponRepository couponRepository;
 
 	// to add the graphqls file
 	@Value("classpath:schema.graphqls")
@@ -82,15 +82,14 @@ public class GraphQLService {
 		return graphql;
 	}
 	
-	private void loadDummyData() {
-		Stream.of(new Coupon( "Amazon10", "Get Flat 10 Rs", Category.AMAZON, 10),
-				new Coupon("Flipkart10", "Get Flat 10 Rs", Category.FLIPKART, 10),
-				new Coupon("Snap10", "Get Flat 10 Rs", Category.SNAPDEAL, 10),
-				new Coupon("Uber10", "Get Flat 10 Rs", Category.UBER, 10),
-				new Coupon("Zomato10", "Get Flat 10 Rs", Category.ZOMATO, 10),
-				new Coupon("Amazon50", "Get Flat 50 Rs", Category.AMAZON, 50))
-		.forEach(coupon -> {
-			couponRepository.save(coupon);
-		});
-	}
+	/*
+	 * private void loadDummyData() { Stream.of(new Coupon( "Amazon10",
+	 * "Get Flat 10 Rs", Category.AMAZON, 10), new Coupon("Flipkart10",
+	 * "Get Flat 10 Rs", Category.FLIPKART, 10), new Coupon("Snap10",
+	 * "Get Flat 10 Rs", Category.SNAPDEAL, 10), new Coupon("Uber10",
+	 * "Get Flat 10 Rs", Category.UBER, 10), new Coupon("Zomato10",
+	 * "Get Flat 10 Rs", Category.ZOMATO, 10), new Coupon("Amazon50",
+	 * "Get Flat 50 Rs", Category.AMAZON, 50)) .forEach(coupon -> {
+	 * couponRepository.save(coupon); }); }
+	 */
 }

@@ -29,22 +29,23 @@ public class CouponController {
 		return new ResponseEntity<Object>(execResult, HttpStatus.OK);
 	}
 	
+	
 	@PostMapping("/all")
 	public ResponseEntity<Object> getAllCoupons(@RequestBody String query){
 		ExecutionResult execResult = graphQLService.getGraphQL().execute(query);
 		return new ResponseEntity<Object>(execResult, HttpStatus.OK);
 	}
 	
-	@RequestMapping("/{couponId}")
-	@Cacheable(key = "#couponId",value = "Coupon")
+	@PostMapping("/{id}")
+	@Cacheable(key="#id",value="Coupon")
 	public ResponseEntity<Object> getCouponById(@RequestBody String query){
 		
 		ExecutionResult execResult = graphQLService.getGraphQL().execute(query);
 		return new ResponseEntity<Object>(execResult, HttpStatus.OK);
 	}
 	
-	@DeleteMapping("/{couponId}")
-	@CacheEvict(key = "#couponId", value = "couponId")
+	@PostMapping("/delete/{id}")
+	@CacheEvict(key="#id",value="Coupon")
 	public ResponseEntity<Object> cancelBooking(@RequestBody String query){
 		ExecutionResult execResult = graphQLService.getGraphQL().execute(query);
 		return new ResponseEntity<Object>(execResult, HttpStatus.OK);

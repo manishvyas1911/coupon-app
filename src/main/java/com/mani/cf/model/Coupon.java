@@ -2,23 +2,18 @@ package com.mani.cf.model;
 
 import java.io.Serializable;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-
 import org.springframework.data.redis.core.RedisHash;
 
 import com.mani.cf.constant.Category;
 
-@Entity
 @RedisHash(value = "Coupon")
-public class Coupon implements Serializable {
+//@Entity
+public class Coupon implements Serializable{
 
-	private static final long serialVersionUID = 1L;
-	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+
+	//@Id
+   // @SequenceGenerator(name = "SEQ_GEN", sequenceName = "SEQ_USER", allocationSize = 1)
+   // @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_GEN")
 	private int id;
 	private String name;
 	private String description;
@@ -30,14 +25,21 @@ public class Coupon implements Serializable {
 	}
 	
 
-	public Coupon( String name, String description, Category category, int value) {
+
+	
+
+	public Coupon(int id, String name, String description, Category category, int value) {
 		super();
+		this.id = id;
 		this.name = name;
 		this.description = description;
 		this.category = category;
 		this.value = value;
 	}
-	
+
+
+
+
 
 	public int getId() {
 		return id;
