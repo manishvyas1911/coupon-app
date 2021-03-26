@@ -3,8 +3,10 @@ package com.mani.cf.service.datafetcher;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import com.mani.cf.constant.Category;
 import com.mani.cf.model.Coupon;
@@ -13,7 +15,7 @@ import com.mani.cf.repository.CouponRepository;
 import graphql.schema.DataFetcher;
 import graphql.schema.DataFetchingEnvironment;
 
-@Component
+@Service
 public class AddCouponDataFecher implements DataFetcher<Coupon>  {
 	
 	public static final String HASH_KEY = "Coupon";
@@ -22,6 +24,9 @@ public class AddCouponDataFecher implements DataFetcher<Coupon>  {
 	
 	@Autowired
 	CouponRepository repository;
+	
+	@Autowired
+	private RedisTemplate template;
 	
 	@Override
 	public Coupon get(DataFetchingEnvironment environment) {
@@ -35,8 +40,10 @@ public class AddCouponDataFecher implements DataFetcher<Coupon>  {
 		Coupon coupon = new Coupon(name,description, category, value);
 		
 		logger.info("{}",coupon);
+		Coupon savedCoupon = repository.save(coupon);
+		template.opsForHash().put(HASH_KEY, savedCoupon.getId(), savedCoupon);
 		
-		return repository.save(coupon);
+		return savedCoupon;
 	}
 
 }

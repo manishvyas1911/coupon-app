@@ -12,6 +12,7 @@ import org.springframework.data.redis.core.RedisHash;
 import com.mani.cf.constant.Category;
 
 @Entity
+@RedisHash(value = "Coupon")
 public class Coupon implements Serializable {
 
 	private static final long serialVersionUID = 1L;

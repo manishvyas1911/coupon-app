@@ -4,7 +4,9 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CachePut;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import com.mani.cf.constant.Category;
 import com.mani.cf.model.Coupon;
@@ -13,9 +15,14 @@ import com.mani.cf.repository.CouponRepository;
 import graphql.schema.DataFetcher;
 import graphql.schema.DataFetchingEnvironment;
 
-@Component
+@Service
 public class UpdateCouponByIdDataFecher implements DataFetcher<Coupon>  {
 
+	public static final String HASH_KEY = "Coupon";
+	
+	@Autowired
+	private RedisTemplate template;
+	
 	@Autowired
 	CouponRepository repository;
 	
@@ -29,7 +36,9 @@ public class UpdateCouponByIdDataFecher implements DataFetcher<Coupon>  {
 			dbCoupon.setDescription(environment.getArgument("description"));
 			dbCoupon.setValue(environment.getArgument("value"));
 			dbCoupon.setCategory(Category.valueOf(environment.getArgument("category")));
-			return repository.save(dbCoupon);
+			Coupon updCoupon = repository.save(dbCoupon);
+			template.opsForHash().put(HASH_KEY, updCoupon.getId(), updCoupon);
+			return updCoupon;
 		}else {
 			return null;
 		}

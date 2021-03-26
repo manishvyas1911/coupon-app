@@ -1,9 +1,6 @@
 package com.mani.cf;
 
 import java.util.Collections;
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.annotation.PostConstruct;
 
@@ -16,7 +13,8 @@ import com.mani.cf.model.User;
 import com.mani.cf.repository.UserRepository;
 
 @SpringBootApplication
-public class CouponfinderApplication {
+@EnableCaching
+public class CouponfinderApplication {	
 	
 	@Autowired
 	UserRepository userRepository;

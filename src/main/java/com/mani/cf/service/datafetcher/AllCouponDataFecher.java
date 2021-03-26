@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import com.mani.cf.model.Coupon;
 import com.mani.cf.repository.CouponRepository;
@@ -11,7 +12,7 @@ import com.mani.cf.repository.CouponRepository;
 import graphql.schema.DataFetcher;
 import graphql.schema.DataFetchingEnvironment;
 
-@Component
+@Service
 public class AllCouponDataFecher implements DataFetcher<List<Coupon>>{
 
 	@Autowired
