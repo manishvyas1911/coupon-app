@@ -1,0 +1,47 @@
+query{
+    getCoupons{
+        name,
+        category
+    }
+}
+
+----------------------------------------
+query{
+    getCouponById(id: 1){
+        id
+        name,
+        category,
+        description,
+        value
+    }
+}
+
+
+---------------------------------------
+mutation{
+  newCoupon(
+     name: "Mani10",
+  	 description: "Money Shop",
+  	 category: "AMAZON",
+     value: 100
+  ){
+    name
+  }
+}
+-----------------------------------------
+mutation{
+  updateCoupon(
+     id: 1
+     name: "Mani50",
+  	 description: "Mani Shop",
+  	 category: "AMAZON",
+     value: 500
+  ){
+    name
+  }
+}
+-------------------------------------------
+
+mutation{
+    deleteCoupon(id:1)
+}

@@ -1,0 +1,29 @@
+type Query{
+	getCoupons: [Coupon]
+	getCouponById(id: Int):Coupon
+	findCoupon(category: String): [Coupon]
+}
+
+type Mutation{
+   newCoupon(name: String, description: String, category: String, value: Int): Coupon
+   deleteCoupon(id: Int!) : Boolean
+   updateCoupon(id: Int!, name: String, description: String, category: String, value: Int): Coupon
+}
+
+
+type Coupon {
+id: Int,
+name: String,
+description: String,
+category: CATEGORY
+value: Int
+}
+
+enum CATEGORY{
+	 AMAZON,
+	 FLIPKART,
+	 SNAPDEAL,
+	 UBER,
+	 ZOMATO
+	 
+}
